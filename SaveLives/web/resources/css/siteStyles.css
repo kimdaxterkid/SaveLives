@@ -1,0 +1,492 @@
+
+
+html{
+    /*-------------------------------------------------------------
+    Preferably, use a background color. Uncomment the one you like 
+    from examples below or select your own. See more HTML colors at 
+    http://www.w3schools.com/colors/colors_names.asp
+    -------------------------------------------------------------*/
+    /* background-color: #F0F8FF;   /* AliceBlue */
+    /* background-color: #F0FFFF;   /* Azure */
+    /* background-color: #F5F5DC;   /* Beige */
+    /* background-color: #DCDCDC;   /* Gainsboro */
+    /* background-color: #FFFFF0;   /* Ivory */
+    /* background-color: #FAF0E6;   /* Linen */
+    /*    background-color: #FDF5E6;    OldLace */
+    /* background-color: #FFEFD5;   /* PapayaWhip */
+    /* background-color: #F5DEB3;   /* Wheat */
+    /* Stretch the background image to cover the entire screen. 
+    This is used only if you choose to display a background image. */
+    -webkit-background-size: cover; /* For WebKit */
+    -moz-background-size: cover;    /* For Mozilla */
+    -o-background-size: cover;      /* For Opera */
+    background-size: cover;         /* Generic */
+    background-repeat: no-repeat;   /* Do not repeat the image */
+
+    width: 100%;                    /* Set page width horizontally 100% */
+    height: 100%;                   /* Set page height vertically 100% */
+}
+
+/* Style the text used under the standard HTML tag "body" */
+body {
+    font-family: Futura;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    color: black;
+}
+
+/* 
+Style the div component whose unique id is "page" per reference
+<div id="page"> in siteTemplate.xhtml
+*/
+#page {
+    font-family: Futura, "Times New Roman", Times, Serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    color: black;
+}
+/* 
+Style the div component whose unique id is "header" per reference 
+<div id="header"> in siteTemplate.xhtml
+*/
+#header {
+    background-color: #3e474f;
+    width: 100%;
+    height: 80px;
+    position:absolute;
+    left: 0px;
+    top: -10px;
+    right: 0px;
+    /*    margin-bottom: 16px;*/
+}
+/* 
+Style the div component whose unique id is "editableContent" per reference 
+<div id="editableContent"> in siteTemplate.xhtml
+*/
+#editableContent {
+    /* height = 100% window height - (header height 84px + footer height 100px) */
+    height: calc(100% - 180px); 
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 80px;
+    margin-bottom: 16px;
+}
+/* 
+Style the div component whose unique id is "footer" per reference 
+<div id="footer"> in siteTemplate.xhtml
+*/
+#footer {
+    height: 100px;
+    width: 100%;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+/*
+=======================
+Other Style Definitions
+=======================
+*/
+
+/* Used in EditAccount and UserFiles */
+.alertUser {
+    font-family: Futura, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    color: darkred;
+}
+
+/* Style error messages text */
+.errorMessages {
+    font-family: Futura, Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    color: #FF0000; /* Red */
+}
+
+/* Style a heading text */
+.heading {
+    font-family: Futura, Arial, Helvetica, sans-serif;
+    font-size: 14pt;
+    font-style: normal;
+    font-weight: normal;
+    color: #006400;  /* Dark Green */
+}
+
+/* Style form item text */
+.formItemText {
+    font-family: Futura, Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+/* Used in CreateAccount, EditAccount, SignIn, EnterUsername, and SecurityQuestion */
+.accountInputTextField, .signInInputTextField, .usernameInputTextField, .securityAnswerTextField {
+    width:300px;
+}
+
+/*
+==================================
+Social Media Buttons Spin Animated
+==================================
+Animate the social media icons in footerTemplate.xhtml by spinning them
+360 degrees on mouseover (hovering over).
+
+CSS Transitions allow property changes in CSS values to occur smoothly over a
+specified duration. This smoothing animates the changing of a CSS value when
+triggered by a mouse click. The timing function value “all ease 0.3s” allows
+the speed of the transition to change over time. 
+*/
+.social-roll {
+    height: 36px;
+    width: 36px;
+    margin: 5px;
+    float: left;
+    border-radius: 50%;
+    -webkit-transition: all ease 0.3s;  /* For WebKit */
+    -moz-transition: all ease 0.3s;     /* For Mozilla */
+    -o-transition: all ease 0.3s;       /* For Opera */
+    -ms-transition: all ease 0.3s;      /* For IE10+ */
+    transition: all ease 0.3s;          /* Generic */
+}
+
+/* Mouseover (hovering over) the social media icon animates its 360-degree rotation */
+.social-roll:hover {
+    -webkit-transform:rotate(360deg);  /* For WebKit */
+    -moz-transform:rotate(360deg);     /* For Mozilla */
+    -o-transform:rotate(360deg);       /* For Opera */
+    -ms-transform:rotate(360deg);      /* For IE10+ */
+    transform:rotate(360deg);          /* Generic */
+}
+
+/*
+=================================
+Skinning PrimeFaces UI Components
+=================================
+Check the documentation of a PrimeFaces UI component to identify
+which styles are used so that you can override them.
+
+You can also Inspect the UI element under the Chrome web browser
+to determine which CSS style is used so that you can override it. 
+
+Styles are applied in a cascading order. To make sure that a
+style is applied regardless of where the style is defined in the
+cascading hierarchy, use the !important attribute.
+*/
+
+/* Style PrimeFaces Command Button --> p:commandButton  */
+.commandButton {
+    width: 100px;
+    height: 40pt;
+    font: Futura;
+    font-weight:400;
+}
+
+
+.ui-confirmdialog-yes, .ui-confirmdialog-no, .ui-fileupload-choose, .ui-fileupload-upload, .ui-fileupload-cancel {
+    font-family: Futura, Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
+/*
+Position the confirmation dialog box on the center of the screen per
+reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
+*/
+#confirmDialogBox {
+    top: 50%;
+    left: 50%;
+}
+
+/* Leave 5px padding to left and right of p:dataTable */
+.dataTable {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* Override PrimeFaces style definitions for the Data Table component */
+.ui-datatable-data, .facetHeader, .ui-panel-titlebar, .ui-paginator, .ui-dialog-content, .ui-confirm-dialog-message, .ui-widget-content {
+    font-family: Futura, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+/* Override PrimeFaces style definitions for the Data Grid component */
+.ui-datagrid, .ui-datagrid-content, .ui-datagrid-data, .ui-datagrid-row, .ui-datagrid-column {
+    font-family: Futura, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+/* Override PrimeFaces style definitions for the Panel component */
+.ui-panel, .ui-panel-content {
+    font-family: Futura, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+/* Override PrimeFaces style definitions for the Dialog component */
+.ui-dialog, .ui-dialog-content, .ui-dialog-buttonpane {
+    color: #800000; /* Maroon */
+}
+
+/* Override PrimeFaces style definition for the fileUpload component */
+.ui-fileupload {
+    width: 80%;
+}
+
+.ui-fileupload-buttonbar {
+    /* padding values are specified in clockwise: Top, Right, Bottom, and Left */
+    padding: 0px 0px 8px 0px !important;
+}
+
+.ui-fileupload-content {
+    /* The drag-and-drop area height will increase as more files are dropped */
+    min-height: 200px;
+}
+
+/*
+======================================================
+Auto generated jsfcrud.css content is provided below. 
+Delete jsfcrud.css since its content is provided here.
+======================================================
+*/
+
+/* 
+Set font size in ui-widget styled elements to 12px.
+
+The !important directive forces the style to be applied no matter
+where the style appears in the CSS document.
+*/
+
+.ui-widget {
+    font-size: 12px !important;
+}
+
+/* 
+The overflow property specifies what happens 
+if content overflows an element's box. 
+*/
+.ui-layout-north {
+    z-index: 20 !important;
+    overflow: visible !important;;
+}
+.ui-layout-north .ui-layout-unit-content {
+    overflow: visible !important;
+}
+
+/* This styles the <p:panel header="..."> */
+.ui-widget-header {
+    text-align: center;
+    /* text-transform: uppercase; we do not want this */
+}
+
+/* Leave 10px pading on top for the ui-button elements */
+.ui-button {
+    margin-top: 10px !important;
+}
+
+.fa-icon {
+    color:#5fcf80;
+}
+
+.weblogo {
+    color: #5fcf80;
+    font-size: 55px;
+    font-family: Futura, Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
+.weblogo:hover {
+    color: #5fcf80;
+    text-decoration: none;
+}
+
+.arialTen {
+    font-family: Futura;
+    color: #b2bbbd;
+    font-size: 15pt;
+    font-style:normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.arialTen:hover {
+    color:#7b8b8e;
+    text-decoration: none;
+}
+
+.footerLink {
+    text-decoration: none;
+    color:#3f8abf;
+
+}
+.footerLink:visited, .footerLink:link  {
+    color:#3f8abf;
+    text-decoration: none;
+}
+
+.footerLink:hover {
+    color:#5fcf80;
+}
+
+.footerText {
+    color:#8d9aa5;
+}
+
+.gridTitle {
+    font-family: Futura, Arial, Helvetica, sans-serif;
+    font-size: 30pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    color: #384047;
+}
+
+.panelGrid.ui-panelgrid>*>tr, .panelGrid.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+}
+
+.column1 {
+    color: #384047;
+    text-align: right;
+    font-size: 13pt;
+    background-color: #edeff0;
+    white-space: nowrap;
+}
+
+.column2 {
+    text-align: left;
+    font-size: 15pt;
+    font-style: italic;
+    background-color: #edeff0;
+}
+
+.column2-SignIn{
+    text-align: left;
+    font-size: 13pt;
+    background-color: #edeff0;
+}
+
+.column2-EditAccount{
+    text-align: left;
+    font-size: 13pt;
+    background-color: #edeff0;
+}
+
+.customButton {
+    border-radius: 2em;
+    width: 100pt;
+    height: 30pt;
+    font: Futura;
+}
+
+.ui-steps .ui-steps-item {
+    width: 24%;
+}
+
+.ui-state-highlight {
+    text-shadow: none !important;
+}
+
+.ui-steps.custom {
+    margin-bottom: 30px;
+}
+
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+    height: 10px;
+    padding: 0 1em;
+}
+
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+    background-color: #0081c2;
+    color: #FFFFFF;
+    display: inline-block;
+    width: 30px;
+    border-radius: 10px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.ui-steps.custom .ui-steps-item.ui-state-highlight .ui-steps-title {
+    color: #555;
+}
+
+.ui-widget-content {
+    background: #edeff0;
+    color: #4f4f4f;
+}
+
+#index_container
+{
+    align-content: center;
+    width:80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: #FFF; 
+
+}
+
+#index_right {
+    width:42.5%;
+    float: left; 
+    padding-left:5%;
+    padding-right: 2.5%;
+    background-color: #FFF; 
+}
+
+#index_left {
+    width:42.5%;
+    float: left; 
+    padding-left:2.5%;
+    padding-right: 5%;
+    background-color: #FFF; 
+}
+
+/* Style the text used under the standard HTML tag "p" for paragraph */
+p {
+    font-family: Futura, Times, serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    text-align: left;
+        color: #717f86;
+}
+
+.h2Title {
+    text-align: center;
+    align-content: center;
+    font-family: Futura, Times, serif;
+    font-size: 25pt;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    color: #384047;
+}
+
+.h3Title{
+    text-align: center;
+    align-content: center;
+    font-family: Futura, Times, serif;
+    font-size: 15pt;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    color: #42b4d6;
+}

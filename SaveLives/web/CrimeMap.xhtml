@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <ui:define id="content" name="editableContent">
+            <h:form id="notification-msg">
+                <p:growl id="growl" life="4000" />
+            </h:form>
+            <br/>
+
+            <p:layout style="height: 700px; margin: 20px">
+                <p:layoutUnit position="west" size="250" resizable="false">
+
+                    <div align="center">
+
+                        <!-- FILTERS -->
+                        <h:form>
+
+                            <!-- CALENDARS -->
+                            <p:panelGrid columns="2" columnClasses="column1, column2-EditAccount" class="panelGrid">
+
+                                <!-- CALENDAR 1 -->
+                                <p:outputLabel for="restricted1" value="From:" />
+                                <p:calendar id="restricted1" value="#{crimeCaseController.date1}" 
+                                            mindate="1/1/12" maxdate="4/1/17" pattern="MM/dd/yyyy"
+                                            navigator="true" required="true" >
+                                </p:calendar>
+
+                                <!--CALENDAR 2 -->
+                                <p:outputLabel for="restricted2" value="To:" />
+                                <p:calendar id="restricted2" value="#{crimeCaseController.date2}" 
+                                            mindate="1/1/12" maxdate="4/1/17" pattern="MM/dd/yyyy"
+                                            navigator="true" required="true" >
+                                </p:calendar>
+                            </p:panelGrid>
+                            <br/>
+                            <br/>
+                            <!-- CRIME TYPE/DESCRIPTION -->
+                            <p:selectCheckboxMenu id="categories" value="#{crimeCaseController.selectedCategories}" label="Crime Description"
+                                                  filter="true" filterMatchMode="contains" style="width:200px">
+                                <f:selectItems value="#{crimeCaseController.crimeCategories}" />
+                            </p:selectCheckboxMenu>
+                            <br/>
+                            <br/>
+                            <!-- CRIME CODE -->
+                            <p:selectCheckboxMenu id="crimecodes" value="#{crimeCaseController.selectedCrimeCodes}" label="Crime Code"
+                                                  filter="true" filterMatchMode="contains" style="width:200px">
+                                <f:selectItems value="#{crimeCaseController.crimeCodes}" />
+                            </p:selectCheckboxMenu>
+                            <br/>
+                            <br/>
+                            <!-- CRIME WEAPON -->
+                            <p:selectCheckboxMenu id="crimeweapons" value="#{crimeCaseController.selectedWeapons}" label="Weapons"
+                                                  filter="true" filterMatchMode="contains" style="width:200px">
+                                <f:selectItems value="#{crimeCaseController.weapons}" />
+                            </p:selectCheckboxMenu>
+                            <br/>
+                            <br/>
+                            <!-- CRIME NEIGHBORHOOD -->
+                            <p:selectCheckboxMenu id="crimeneighborhood" value="#{crimeCaseController.selectedNeighborhoods}" label="Neighborhoods"
+                                                  filter="true" filterMatchMode="contains" style="width:200px">
+                                <f:selectItems value="#{crimeCaseController.neighborhoods}" />
+                            </p:selectCheckboxMenu>
+                            <br/>
+                            <br/>
+                            <!-- SUBMIT BUTTON -->
+                            <p:commandButton id="submitBtn" value="Submit"  update=":views:gmap :views:chartViews :views:CrimeListForm:crimeList 
+                                             categories restricted1 restricted2 crimecodes crimeweapons crimeneighborhood :notification-msg:growl"
+                                             actionListener="#{crimeCaseController.submit}" oncomplete="postSubmit();" ajax="true" class="customButton"/>
+                            <p:blockUI block="views" trigger="submitBtn" >
+                                <p:graphicImage value="#{resource['images:statusbar.gif']}" />
+                            </p:blockUI> 
+                        </h:form>
+
+
+
+                    </div>
+                    <div align="center">
+                        <h:form>
+                            <br/>
+                            <br/>
+                            <c:if test="${accountManager.isLoggedIn()}">
+
+                                <p:button outcome="HistorySearch" value="Search History" 
+                                          styleClass="customButton" />
+
+                                <p:commandButton id="shareButton" value="Share Search" 
+                                                 styleClass="customButton" actionListener="#{historySearchController.prepareEmailBodyForLastSearch()}" 
+                                                 />
+                            </c:if>
+                            <c:if test="${not accountManager.isLoggedIn()}">
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                You need to <h:link outcome="SignIn" >sign in</h:link> to <b>save</b> <br/>or <b>share</b> your searches.
+                            </c:if>
+                        </h:form>
+                    </div>
+
+
+
+
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" resizable="false" size="700">
+                    <p:accordionPanel multiple="true" id="views" dynamic="true" cache="true">
+                        <p:tab title="Map">
+                            <h:form>
+                                <!-- HEAT MAP BUTTONS -->
+                                <p:inputSwitch id="heatMapButton" onLabel="DATA POINTS" offLabel="HEAT MAP" style="width:60px" onchange="changeMap();" />
+                            </h:form>
+                            <!-- MAP -->
+                            <p:gmap id="gmap" center="39.288752, -76.613069" zoom="13" disableDefaultUI="false" 
+                                    widgetVar="map" model="#{crimeCaseController.mapModel}" 
+                                    type="HYBRID" style="width:97%;height:500px" >
+                                <p:ajax event="overlaySelect" listener="#{crimeCaseController.onMarkerSelect}" />
+
+                                <!-- MAP INFO -->
+                                <p:gmapInfoWindow id="infoWindow">
+                                    <p:outputPanel style="text-align: center; display: block; margin: auto">
+                                        <h:panelGrid columns="2" cellpadding="1" style=" text-align: left">
+                                            <h:outputText value="Description:" />
+                                            <h:outputText value="#{crimeCaseController.selected.title}" />
+                                            <h:outputText value="Date:" />
+                                            <h:outputText value="#{crimeCaseController.selected.data.date}" />
+                                            <h:outputText value="Code:" />
+                                            <h:outputText value="#{crimeCaseController.selected.data.code}" />
+                                            <c:if test="#{!empty crimeCaseCaseController.selected.data.weapon}">
+                                                <h:outputText value="Weapon:" />
+                                                <h:outputText value="#{crimeCaseController.selected.data.weapon}" />
+                                            </c:if>
+                                            <c:if test="#{!empty crimeCaseCaseController.selected.data.post}">
+                                                <h:outputText value="Post:" />
+                                                <h:outputText value="#{crimeCaseController.selected.data.post}" />
+                                            </c:if>
+                                            <h:outputText value="District:" />
+                                            <h:outputText value="#{crimeCaseController.selected.data.district}" />
+                                            <c:if test="#{!empty crimeCaseCaseController.selected.data.neighborhood}">
+                                                <h:outputText value="Neighborhood:" />
+                                                <h:outputText value="#{crimeCaseController.selected.data.neighborhood}" />
+                                            </c:if>
+                                        </h:panelGrid>
+                                    </p:outputPanel>
+                                </p:gmapInfoWindow>
+                            </p:gmap>
+
+                        </p:tab>
+                        <p:tab title="Charts">
+                            <!-- CHARTS -->
+
+                            <p:tabView dynamic="true" cache="true" id="chartViews"  >
+                                <p:tab title="Bar Graph">
+                                    <!-- BAR GRAPH -->
+
+                                    <p:chart id="crimeBarGraph" type="bar" style="height:400px" model="#{crimeCaseController.barModel}" />
+
+                                </p:tab>
+                                <p:tab title="Pie Chart">
+                                    <!-- PIE CHART -->
+                                    <p:chart id="pieChart" type="pie" model="#{crimeCaseController.pieModel}" style="height:400px" />
+                                </p:tab>
+
+                            </p:tabView>
+                            <p:blockUI block="chartViews" trigger="chartViews">
+                                <p:graphicImage value="#{resource['images:statusbar.gif']}" />
+                            </p:blockUI> 
+                        </p:tab>
+                        <p:tab title="Table">
+
+                            <h:form id="CrimeListForm">
+                                <p:panel header="Crimes">
+
+                                    <p:dataTable id="crimeList" value="#{crimeCaseController.mapModel.markers}" var="item"
+                                                 selectionMode="single" selection="#{crimeCaseController.selected}"
+                                                 paginator="true" rowKey="#{item.code}" rows="10" 
+                                                 rowsPerPageTemplate="5,10,15,20,30,40,50" >
+                                        <!-- CODE -->
+                                        <p:column sortBy="#{item.data.code}" style="width:50px;">
+                                            <f:facet name="header">
+                                                <h:outputText value="Code" />
+                                            </f:facet>
+                                            <div align="center">
+                                                <h:outputText value="#{item.data.code}" />
+                                            </div>
+                                        </p:column>
+
+                                        <!-- DATE -->
+                                        <p:column sortBy="#{item.data.date}" style="width:180px">
+                                            <f:facet name="header">
+                                                <h:outputText value="Date" />
+                                            </f:facet>
+                                            <div align="center">
+                                                <h:outputText value="#{item.data.date}" />
+                                            </div>
+                                        </p:column>
+
+                                        <!-- TIME -->
+                                        <p:column sortBy="#{item.data.time}" style="width:60px">
+                                            <f:facet name="header">
+                                                <h:outputText value="Time" />
+                                            </f:facet>
+                                            <div align="center">
+                                                <h:outputText value="#{item.data.time}" />
+                                            </div>
+                                        </p:column>
+
+                                        <!-- LOCATION -->
+                                        <p:column sortBy="#{item.data.location}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Location" />
+                                            </f:facet>
+                                            <h:outputText value="#{item.data.location}" />
+                                        </p:column>
+
+                                        <!-- NEIGHBORHOOD -->
+                                        <p:column sortBy="#{item.data.neighborhood}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Neighborhood" />
+                                            </f:facet>
+                                            <h:outputText value="#{item.data.neighborhood}" />
+                                        </p:column>
+
+                                        <!-- DISTRICT -->
+                                        <p:column sortBy="#{item.data.district}">
+                                            <f:facet name="header">
+                                                <h:outputText value="District" />
+                                            </f:facet>
+                                            <h:outputText value="#{item.data.district}" />
+                                        </p:column>
+
+                                        <!-- POST -->
+                                        <p:column sortBy="#{item.data.post}" style="width:50px">
+                                            <f:facet name="header">
+                                                <h:outputText value="Post" />
+                                            </f:facet>
+                                            <div align="center">
+                                                <h:outputText value="#{item.data.post}" />
+                                            </div>
+                                        </p:column>
+
+                                        <!-- DESCRIPTION -->
+                                        <p:column sortBy="#{item.data.description}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Category" />
+                                            </f:facet>
+                                            <h:outputText value="#{item.data.description}" />
+                                        </p:column>
+
+                                        <!-- WEAPON -->
+                                        <p:column sortBy="#{item.data.weapon}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Weapon" />
+                                            </f:facet>
+                                            <h:outputText value="#{item.data.weapon}" />
+                                        </p:column>
+
+                                    </p:dataTable>
+                                    <p:blockUI block="crimeList" trigger="crimeList">
+                                        <p:graphicImage value="#{resource['images:statusbar.gif']}" />
+                                    </p:blockUI> 
+                                </p:panel>
+
+                            </h:form>
+
+                        </p:tab>
+                    </p:accordionPanel>
+                    <p:blockUI block="views" trigger="views">
+                        <p:graphicImage value="#{resource['images:statusbar.gif']}" />
+                    </p:blockUI>
+                </p:layoutUnit>
+            </p:layout>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

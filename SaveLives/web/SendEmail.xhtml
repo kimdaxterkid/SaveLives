@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Pingxin Shang on 2017.01.01
+Copyright © 2017 Pingxin Shang. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title to Contact Us -->
+            <h:outputText value="Send Email"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center">
+                <p:growl id="growl" life="4000"/>
+
+                <h:form id="EmailCompositionForm"> 
+                    <br/>
+                    <br/>
+                    <h1>Compose and Send Your Email Message</h1>
+
+                    <br/>
+                    <p:panelGrid columns="2" columnClasses="column1, column2-EditAccount" class="panelGrid">
+
+                        <h:outputLabel value="To:" for="toField" />
+                        <p:inputText id="toField" class="emailFields" value="#{emailSender.emailTo}" 
+                                     title="Email To" required="true" requiredMessage="Please Enter Email Address"
+                                     onfocus="$(this).attr('placeholder', 'e.g., John.Smith@gmail.com');"
+                                     onblur="$(this).attr('placeholder', 'Enter Email Address');" >
+                            <!-- Execute the "validate" method in the "EmailAddressValidator.java" class file to validate
+                            the email address entered. -->
+                            <f:validator validatorId="emailAddressValidator" />
+                        </p:inputText>
+
+                        <h:outputLabel value="Cc: " for="ccField" />
+                        <p:inputText id="ccField" class="emailFields" value="#{emailSender.emailCc}" 
+                                     title="Email Copy" required="false"
+                                     onfocus="$(this).attr('placeholder', 'Enter email addresses comma separated with no spaces');"
+                                     onblur="$(this).attr('placeholder', 'Enter Email Address(es)');" >
+                            <!-- Execute the "validate" method in the "EmailAddressesValidator.java" class file to validate
+                            the email addresses entered in the comma separated format. -->
+                            <f:validator validatorId="emailAddressesValidator" />
+                        </p:inputText>   
+
+                        <h:outputLabel value="Subject:" for="subjectField" />
+                        <p:inputText id="subjectField" class="emailFields" value="#{emailSender.emailSubject}" 
+                                     title="Email Subject" required="true" requiredMessage="Please Enter Email Subject!"
+                                     onfocus="$(this).attr('placeholder', 'Enter Subject Title');"
+                                     onblur="$(this).attr('placeholder', 'Enter Subject Title');" />
+
+                    </p:panelGrid>
+                    <br />
+
+
+                    <p:editor id="editor" widgetVar="editorWidget" value="#{editorView.text}" 
+                              width="600" height="350" />
+                    <br />
+
+                    <p:commandButton value="Send Email" ajax="false" class="customButton"
+                                     type="submit" action="#{emailSender.sendEmail()}" update=":growl"/>
+                    &nbsp;&nbsp;
+                    <p:button value="Cancel"  class="customButton" outcome="HistorySearch"/>
+                    &nbsp;&nbsp;
+                    <p:button value="Back Profile"  class="customButton" outcome="Profile"/>
+
+                    <br /><br />
+                </h:form>
+
+            </div>
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

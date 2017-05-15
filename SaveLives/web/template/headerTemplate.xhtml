@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Taiwen Jin on 2017.03.31 
+Copyright © 2017 Taiwen Jin. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form>
+
+            <table border="0" cellspacing="0" cellpadding="10" width="100%">
+                <tr>
+                    <td align="left" valign="middle">
+                        <h:link outcome="index" styleClass="weblogo">Save Lives
+                        </h:link>
+                    </td>
+                    <td align="right" valign="middle">
+                        <h:link outcome="index" styleClass="arialTen">
+                            <i class="fa fa-home fa-icon">&nbsp;</i>Home
+                        </h:link>&nbsp;&nbsp;
+
+                        <h:link outcome="CrimeMap" styleClass="arialTen">
+                            <i class="fa fa-map fa-icon">&nbsp;</i>Crime Map
+                        </h:link>&nbsp;&nbsp;
+
+                        <c:if test="${accountManager.isLoggedIn()}">
+
+                            <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
+                                <i class="fa fa-sign-out fa-icon">&nbsp;</i>Sign Out
+                            </h:commandLink>&nbsp;&nbsp;
+
+                            <h:link id="profileLink" styleClass="arialTen">
+                                <i class="fa fa-bars fa-icon">&nbsp;</i>My Account
+                            </h:link>&nbsp;&nbsp;
+
+                            <p:menu overlay="true" trigger="profileLink" my="left top" at="left bottom">
+                                <p:menuitem outcome="Profile"><i class="fa fa-user">&nbsp;</i>User Profile</p:menuitem>
+                                <p:menuitem outcome="EditAccount"><i class="fa fa-pencil-square-o">&nbsp;</i>Edit Information</p:menuitem>
+                                <p:menuitem outcome="EnterUsername"><i class="fa fa-key">&nbsp;</i>Change Password</p:menuitem>
+
+                                <p:menuitem outcome="HistorySearch"><i class="fa fa-history">&nbsp;</i>Search History</p:menuitem>
+                                <p:menuitem outcome="PreferredSearch"><i class="fa fa-heart">&nbsp;</i>Search Preference</p:menuitem>
+                            </p:menu>
+
+                        </c:if>
+                        <c:if test="${not accountManager.isLoggedIn()}">
+                            <h:link outcome="CreateAccount" styleClass="arialTen">
+                                <i class="fa fa-plus fa-icon">&nbsp;</i>Create Account
+                            </h:link>&nbsp;&nbsp;
+                            <h:link outcome="SignIn" styleClass="arialTen">
+                                <i class="fa fa-sign-in fa-icon">&nbsp;</i>Sign In
+                            </h:link>&nbsp;&nbsp;
+                        </c:if>
+
+
+                    </td>
+                </tr>
+            </table>
+
+        </h:form>
+
+    </ui:composition>
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+</html>

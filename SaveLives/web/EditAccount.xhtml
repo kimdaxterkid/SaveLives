@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <ui:define name="editableContent">
+            <p:growl id="growl" life="4000"/>            
+            <div align="center" style="width:50%; margin:0 auto;">
+                
+                <br/>
+                <br/>
+
+                <h:form id="AccountEditForm">
+
+                    <i class="gridTitle">Edit Your Account</i>
+                    <br/>
+                    <br/>
+                    <p:panelGrid columns="2" columnClasses="column1, column2-EditAccount" class="panelGrid">
+
+                        <h:outputText value="Username: " />
+                        <h:outputText value="#{accountManager.selected.username}" />
+
+                        <h:outputLabel value="First Name: " for="firstName" />
+                        <p:inputText id="firstName" value="#{accountManager.selected.firstName}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="Your First Name is Required to Edit Account!" label="First Name">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>   
+
+                        <h:outputLabel value="Middle Name: " for="middleName" />
+                        <p:inputText id="middleName" value="#{accountManager.selected.middleName}"
+                                     required="false" styleClass="accountInputTextField" label="Middle Name">
+                        </p:inputText>
+
+                        <h:outputLabel value="Last Name: " for="lastName" />
+                        <p:inputText id="lastName" value="#{accountManager.selected.lastName}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="Your Last Name is Required to Edit Account!" label="Last Name">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <h:outputLabel value="Address Line 1: " for="address1" />
+                        <p:inputText id="address1" value="#{accountManager.selected.address1}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="Your Address is Required to Edit Account!" label="Address Line 1">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <h:outputLabel value="Address Line 2: " for="address2" />
+                        <p:inputText id="address2" value="#{accountManager.selected.address2}" styleClass="accountInputTextField" label="Address Line 2">
+                        </p:inputText>
+
+                        <h:outputLabel value="City: " for="city" />
+                        <p:inputText id="city" value="#{accountManager.selected.city}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="Your City is Required to Edit Account!" label="City">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <h:outputLabel value="State: " for="state" />
+                        <h:selectOneMenu id="state" value="#{accountManager.selected.state}" required="true" 
+                                         requiredMessage="Your State is Required to Edit Account!">
+                            <f:selectItems value="#{accountManager.listOfStates}" var="state"
+                                           itemLabel="#{state}" itemValue="#{state}" />
+                        </h:selectOneMenu>
+
+                        <h:outputLabel value="Zipcode: " for="zipcode" />
+                        <p:inputText id="zipcode" value="#{accountManager.selected.zipCode}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="Your Zipcode is Required to Edit Account!" label="Zip Code" >
+                            <f:validateLength minimum="5" />
+                        </p:inputText>
+
+                        <h:outputLabel value="Email: " for="email" />
+                        <p:inputText id="email" value="#{accountManager.selected.email}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="Your Email is Required to Edit Account!" label="Email">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+
+                    </p:panelGrid>
+                    <br />
+
+                    <p:commandButton id="Submit" value="Submit" action="#{accountManager.updateAccount()}" 
+                                     styleClass="customButton" ajax="false" />
+                    &nbsp;&nbsp;
+
+                    <p:button outcome="Profile" value="Cancel" styleClass="customButton" />
+
+                </h:form>
+            </div>
+            <br/>
+            <br/>
+        </ui:define>
+    </ui:composition>
+
+</html>

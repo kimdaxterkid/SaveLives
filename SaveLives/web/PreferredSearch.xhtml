@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Cheick Berthe on 2017.02.24
+Copyright © 2017 Cheick Berthe. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Preferred Search"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center" style="width:80%; margin:0 auto;">
+                <p:growl id="growl" life="4000" />
+                <h:form id="PreferredSearchForm">
+                    <p:panel header="Preferred Searches">
+                        <p:dataTable id="datalist" value="#{preferredSearchController.items}" var="item"
+                                     selectionMode="single" selection="#{preferredSearchController.selected}"
+                                     paginator="true"
+                                     rowKey="#{item.index}"
+                                     rows="5"
+                                     rowsPerPageTemplate="5,10,15,20,30,40,50"
+                                     class="dataTable"
+                                     >
+
+                            <p:ajax event="rowSelect"   update="searchButton shareButton changeNameButton deleteButton"/>
+                            <p:ajax event="rowUnselect" update="searchButton shareButton changeNameButton deleteButton"/>
+
+                            <p:column style='width:70px'>
+                                <f:facet name="header">
+                                    <h:outputText value="Name" class="facetHeader"/>
+                                </f:facet>
+                                <h:outputText class="dataFields" value="#{item.name}"/>
+                            </p:column>
+
+                            <p:column style='width:70px'>
+                                <f:facet name="header">
+                                    <h:outputText value="Create Time" class="facetHeader"/>
+                                </f:facet>
+                                <h:outputText class="dataFields" value="#{item.createTime}">
+                                    <f:convertDateTime pattern="MM-dd-yyyy HH:mm:ss" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column style='width:70px'>
+                                <f:facet name="header">
+                                    <h:outputText value="From Date" class="facetHeader"/>
+                                </f:facet>
+                                <h:outputText class="dataFields" value="#{item.from}">
+                                    <f:convertDateTime pattern="MM-dd-yyyy" />
+                                </h:outputText>
+
+                            </p:column>
+
+                            <p:column style='width:70px'>
+                                <f:facet name="header">
+                                    <h:outputText value="To Date" class="facetHeader"/>
+                                </f:facet>
+                                <h:outputText class="dataFields" value="#{item.to}">
+                                    <f:convertDateTime pattern="MM-dd-yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Categories" class="facetHeader"/>
+                                </f:facet>
+                                <h:outputText class="dataFields" value="#{item.categories.toString()}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Crime Code" class="facetHeader"/>
+                                </f:facet>
+                                <h:outputText class="dataFields" value="#{item.crimeCodes.toString()}"/>
+                            </p:column>
+
+                            <p:column style='width:120px'>
+                                <f:facet name="header">
+                                    <h:outputText value="Weapon" class="facetHeader"/>
+                                </f:facet>
+                                <h:outputText class="dataFields" value="#{item.weapons.toString()}"/>
+                            </p:column>
+
+                            <p:column style='width:120px'>
+                                <f:facet name="header">
+                                    <h:outputText value="Neighborhood" class="facetHeader"/>
+                                </f:facet>
+                                <h:outputText class="dataFields" value="#{item.neighborhoods.toString()}"/>
+                            </p:column>
+
+                            <f:facet name="footer">
+
+                                <p:commandButton id="changeNameButton" value="Rename" update=":ChangeNameForm"
+                                                 styleClass="customButton" oncomplete="PF('ChangeNameDialog').show()"
+                                                 disabled="#{empty preferredSearchController.selected}"/> 
+
+                                &nbsp;&nbsp; 
+                                <p:commandButton id="deleteButton"  value="Delete" 
+                                                 styleClass="customButton" actionListener="#{preferredSearchController.delete}" 
+                                                 disabled="#{empty preferredSearchController.selected}" 
+                                                 update=":growl, :PreferredSearchForm"/> 
+
+                                &nbsp;&nbsp;
+                                <p:commandButton id="searchButton"  value="Search Again" 
+                                                 styleClass="customButton" actionListener="#{preferredSearchController.searchAgain}" 
+                                                 disabled="#{empty preferredSearchController.selected}" /> 
+                                &nbsp;&nbsp;
+                                <p:commandButton id="shareButton"  value="Share this Search" 
+                                                 styleClass="customButton" actionListener="#{preferredSearchController.prepareEmailBody()}" 
+                                                 disabled="#{empty preferredSearchController.selected}" />
+                            </f:facet>
+
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+            </div>
+            <ui:include src="ChangeName.xhtml"/>
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>
+

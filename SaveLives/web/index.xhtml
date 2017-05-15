@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="editableContent">
+            <br/><br />
+
+
+            <div id="sliderFrame">
+                <br/>
+                <div id="slider">
+                    <img src="resources/images/imageSliderPhotos/slider1.jpg" alt="A member of the Baltimore Police Department removes crime scene tape from a corner where a victim of a shooting was discovered in July" />
+                    <img src="resources/images/imageSliderPhotos/slider2.jpg" alt="Police investigate a shooting at North Ave and Pennsylvania Avenue, May 18, 2015, in Baltimore." />
+                    <img src="resources/images/imageSliderPhotos/slider3.jpg" alt="Baltimore Criminals Know They Can Do The Crime And Not The Time" />
+                    <img src="resources/images/imageSliderPhotos/slider4.jpg" alt="Night of looting, fires leave Baltimore looking like ‘war zone’" />
+                    <img src="resources/images/imageSliderPhotos/slider5.jpg" alt="looking up light street" />
+                    <img src="resources/images/imageSliderPhotos/slider6.jpg" alt="Oriole Park at Camden Yards 7537" />
+                    <img src="resources/images/imageSliderPhotos/slider7.jpg" alt="President Street" />
+                </div>
+            </div>
+
+            <br /><br /><br />
+            <div id="index_container">
+                <br /><br />
+                <div id="index_left" align="right">
+                    <div style="width:100%;text-align: center" >
+                        <i class="h2Title"> Crime in Baltimore </i>
+                        <p>Wikipedia reports that “The city of Baltimore, Maryland, United States is infamous for its very high crime rate, 
+                            including a violent crime rate that ranks high above the national average.”</p> 
+                        <i class="h3Title">Baltimore Murder Rate Still Rising</i>
+                        <p>In an article entitled “After 
+                            Bloodiest Year, Baltimore Murder Rate Still Rising”, Huston indicates that “With 344 murders, last year was the 
+                            bloodiest year in the City of Baltimore’s history. But as 2016 reaches its halfway point, the bloodshed seems to 
+                            be showing no signs of stopping.” [Huston 2016]. </p>
+
+                        <img src="resources/images/intro.jpg"  style="width:80%;margin:0;"/>
+                        <br/><br/>
+                        <i class="h3Title">The law enforcement officers need help</i>
+                        <p>One approach to help the Baltimore City Police Department to prevent crimes is to provide them with crime data 
+                            analytics and mapping so that they are better prepared about what, where, and when to expect occurrences of 
+                            illegal activities and crimes. In an article entitled “Predicting Crime Using Analytics and Big Data”, Collins 
+                            indicates that “A unique approach to crime analysis may allow police officers to predict illegal activity.” 
+                            [Collins 2013]</p>
+                        <i class="h3Title">A possible solution</i>
+                        <p>As a solution to the stated problem, the Baltimore City Police Department would like to have a multi-tiered 
+                            distributed cloud software system to be able to track crimes in order to support increased police support 
+                            during peak crimes and locations as needed. By looking at trends and anomalies, the law enforcement officers 
+                            can better understand the nuances of crime and better support the city.</p>
+
+                    </div>
+
+                </div>
+                <div id="index_right" align="left">
+                    <div style="width:100%;text-align: center" >
+                        <i class="h2Title">Victim Based Crime Data </i>
+
+                        <p>The Baltimore City Police Department already provides victim-based crime data.</p>
+                        <i class="h3Title">Open Baltimore BPD Part 1</i>
+                        <br/>
+                        <br/>
+                        <img src="resources/images/dateset.png"  style="width:70%;margin:0 auto;"/>
+                        <p>This data can be ingested into persistent storage using MongoDB database. MongoDB is a free and open-source 
+                            cross-platform document-oriented NoSQL database management system. Once the data is stored in a MongoDB, it 
+                            can be injested using RESTful API called SODA (Socrata Open Data API) </p>
+                        <i class="h3Title">Future of this application</i>
+                        <p>The desired cloud software system can be reused by many stakeholders including other city police departments, 
+                            FBI, and the Department of Homeland Security by using other collected crime datasets.</p>
+
+
+                    </div>
+                </div>
+
+                <div style="clear:both"></div>
+                <br /><br />
+            </div>
+
+        </ui:define>
+    </ui:composition>
+</html>
